@@ -1,8 +1,10 @@
-# MozFest2014 music expression workshop
+# Musical expression on the open web
 
-Hello, you've made it to my Github repo for "music expression on the open web", a workshop held at the 2014 Mozilla Festival in London.  Here you will find everything you need to get started on the workshop challenges, creative inspiration, and helpful tools/utilities when working with the web audio api.
+Hello, you've made it to my Github repo for "musical expression on the open web", a workshop held at the 2014 Mozilla Festival in London.  Here you will find everything you need to get started on the workshop challenges, creative inspiration, and helpful tools/utilities when working with the web audio api.
 
 **Workshop audience:** This workshop is targeted at beginner/intermediate coders/designers/musicians.  I'm assuming participants have worked in javascript before, but not necessarily with the web audio api.  It also helps to have a basic understanding of audio signal routing (inputs and outputs).  If you're feeling overwhelmed but are still excited to create some novel experiences usging the web audio api, please reach out to either myself, one of the facilitators, or a buddy participant in the workshop!
+
+**[Tone.js](https://github.com/TONEnoTONE/Tone.js):** All examples use the Tone.js audio library, by Yotam Mann. Tone is intended for musician/programmers who want to compose complex computer music, but also want the flexibility of working with various other javascript libraries.
 
 Shortlink to this repo:  [bit.ly/indefinit-mozfest2014](http://bit.ly/indefinit-mozfest2014)
 
@@ -12,20 +14,25 @@ Shortlink to this repo:  [bit.ly/indefinit-mozfest2014](http://bit.ly/indefinit-
 - Short history and review of current inspirations using web audio
 
 ### Introduction To Workshop Themes (10 min)
-1.  Buffers and samples
-2.  Spatialization and convolution
+1.  Buffers and samples - (Instruments that sample audio)
+2.  Spatialization and convolution - (Sounds in space)
 
 ### Breakout Sessions / Challenges (45 min)
 
-- **Group 1 - Buffers and samples** (EXAMPLE LINK TBD)
+- **Theme 1 - Buffers and samples** [Example](http://indefinit.github.io/MozFest2014-musicexpression-workshop/01_buffer_simple.html)
     + Create a simple sound sampler that takes in audio streams from the local filesystem or spotify 30s preview api, and plays them back in unique ways. 
-- **Group 2 - Spatialization and convolution** (EXAMPLE LINK TBD)
+- **Theme 2 - Spatialization and convolution** [Example](http://indefinit.github.io/MozFest2014-musicexpression-workshop/02_convolution_simple.html)
     + Using a balloon and your mobile phone, find a quiet space to record your own impulse response and convolve it with a sound file of your choosing.
 
 ----------
 
 ## Resources For Workshop Themes
-Code snippets and helpful utilities can be found in their respective subdirectories.  If you're comfortable with local servers, go ahead and roll your own.  Otherwise, you can run any of the Tone.js examples in the Tone-composer live development environment [HERE](http://indefinit.github.io/tone-composer/).
+Code snippets can be found in the ```examples-src/``` directory.  To run any web audio example locally, you'll need to use a localhost server.  The simplest way to open an http server on port 8080 is to navigate into the examples directory in your terminal, and then:
+```shell
+python -m SimpleHTTPServer 8080
+```
+
+Navigate your browser to http://localhost:8080/ and you should be all set!
 
 #### <i class="icon-folder-open"></i> Buffers and samples
 
@@ -36,13 +43,14 @@ Code snippets and helpful utilities can be found in their respective subdirector
    
  - [Spotify web api console](https://developer.spotify.com/web-api/console/get-track/#complete): Helpful for accessing the 30s preview api.
  - [Deep dive](https://developer.spotify.com/web-api/tutorial/) into the Spotify developers site.
- - (Advanced) [What is base64 encoding used for?](http://stackoverflow.com/questions/201479/what-is-base-64-encoding-used-for) StackOverflow article.
+ - [What is base64 encoding used for?](http://stackoverflow.com/questions/201479/what-is-base-64-encoding-used-for) StackOverflow article (Advanced).
    
 
 #### <i class="icon-folder-open"></i> Spatialization and convolution
 
  - [Openairlib](http://www.openairlib.net/): Free impulse responses.
- - @TODO need to find a good video link on recording impulse responses with a balloon and your mobile phone. 
+ - [Video](https://www.youtube.com/watch?v=GfMVx42vB4s): How to record your own impulse response.
+ - You might want to edit your impulse response before using in a [Tone.Convolver](https://github.com/TONEnoTONE/Tone.js/blob/dev/Tone/effect/Convolver.js) object.  If you don't already have an audio editor, I recommend the free and open source [Audacity](http://audacity.sourceforge.net/). 
 
 
 
