@@ -1,0 +1,71 @@
+<!-- 
+mozfest-bufferexample.html
+based on official player.html example at https://github.com/TONEnoTONE/Tone.js/blob/dev/examples/player.html
+by Yotam Mann and Studio Indefinit, 2014
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>PLAYER</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  
+  <script type="text/javascript" src="./lib/jquery.min.js"></script>
+  <script type="text/javascript" src="./lib/jquery-ui.js"></script>
+  <script type="text/javascript" src="./lib/jquery.ui.touch-punch.js"></script>
+  <script type="text/javascript" src="./lib/Tone.min.js"></script>
+  <script type="text/javascript" src="./lib/Widgets.js"></script>
+  <link rel="stylesheet" type="text/css" href="./styles/widgets.css">
+  <link rel="stylesheet" type="text/css" href="./styles/jquery-ui.css">
+
+</head>
+<body>
+  <div id="Container">
+    <div id="Explanation">
+      Player
+      <br>
+      <br>
+      Press and hold to hear a 10ms grain of audio. 
+    </div>
+    <div id="Content">
+      <div id="Loading">Loading...</div>
+    </div>
+  </div>
+  <script type="text/javascript">
+
+    /* globals Tone, GUI */
+
+    var player = new Tone.Player("./audio/A1.mp3", function(){
+      $("#Loading").remove();
+    });
+
+    player.loop = true;
+    player.loopStart = 0.1;
+    player.loopEnd = 0.11;
+
+    //connect it to the output
+    player.toMaster();
+    
+    // GUI //
+
+    new GUI.Momentary($("#Content"), function(on){
+      if (on){
+        player.start();
+      } else {
+        player.stop();
+      }
+    }, "start", "stop");
+    
+  </script>
+  <style type="text/css">
+  #Content {
+    width: 100px;
+    height: 50px;
+  }
+  .Momentary {
+    width: 100%;
+  }
+  </style>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!-- 
+mozfest-convolutionexample.html
+based on official convolver.html example at https://github.com/TONEnoTONE/Tone.js/blob/dev/examples/convolver.html
+by Studio Indefinit, 2014
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mozfest Convolution Example</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  
+  <script type="text/javascript" src="./lib/jquery.min.js"></script>
+  <script type="text/javascript" src="./lib/jquery-ui.js"></script>
+  <script type="text/javascript" src="./lib/jquery.ui.touch-punch.js"></script>
+  <script type="text/javascript" src="./lib/Tone.js"></script>
+  <script type="text/javascript" src="./lib/Widgets.js"></script>
+  <link rel="stylesheet" type="text/css" href="./styles/widgets.css">
+  <link rel="stylesheet" type="text/css" href="./styles/jquery-ui.css">
+
+</head>
+<body>
+  <div id="Container">
+    <div id="Explanation">
+      Convolver
+      <br>
+      <br>
+      Press and hold to hear a 10ms grain of audio. 
+    </div>
+    <div id="Content">
+      <div id="Loading">Loading...</div>
+    </div>
+  </div>
+  <script type="text/javascript">
+
+    /* globals Tone, GUI */
+
+    var player = new Tone.Player("./audio/A1.mp3", function(){
+      $("#Loading").remove();
+    });
+
+    player.loop = true;
+    // player.loopStart = 0.1;
+    // player.loopEnd = 0.11;
+    // player.toMaster();
+
+    var convolver = new Tone.Convolver({
+      url : "./audio/IRs/berlin_tunnel_ir.wav",
+      onload : function(buffer){
+        console.log('loaded buffer!');
+      },
+      wetDry: 1      // min: 0  max: +1
+      // bypass: false 
+    });
+    
+    //Effects sends and returns
+    // player.toMaster();
+    player.connect(convolver);
+    convolver.toMaster();
+
+    // GUI //
+    var container = $("#Content");
+
+    // Momentary play
+    new GUI.Momentary(container, function(on){
+      if (on){
+        player.start();
+      } else {
+        player.stop();
+      }
+    }, "Start", "Stop");
+    
+    // Effect bypass checkbox
+    new GUI.Checkbox(container, function(on){
+      if (on){
+        convolver.setBypass();
+      } else {
+        convolver.setWet(1);
+      }
+    }, "Effect bypassOff", "Effect bypassOn");
+
+    // dryWet slider
+    
+    var wetnessSlider = new GUI.Slider(container, function(val){
+      convolver.setWet(val, 0);
+      return val*100;
+    }, 1, "wetness", "%");
+    wetnessSlider.render(1);
+
+    // multi choice dropdown 
+    var impulses = new GUI.DropDown(container, ["Berlin tunnel"], function(val){
+      //do something with impulse val string here
+    });
+
+  </script>
+  <style type="text/css">
+  #Content {
+    width: 300px;
+    height: 300px;
+  }
+
+  .Momentary, .slider, .Value, {
+    width: 100%;
+  }
+  </style>
+</body>
+</html>
