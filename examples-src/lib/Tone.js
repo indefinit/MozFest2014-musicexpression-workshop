@@ -9850,7 +9850,9 @@ define('Tone/source/Player',["Tone/core/Tone", "Tone/core/Buffer", "Tone/source/
 	 */
 	Tone.Player.prototype.load = function(url, callback){
 		var self = this;
-		if (!self._buffer){
+		//@TODO unnecessary conditional 
+		//commented out below.  need to fix this in Tone dev src
+		// if (!self._buffer){
 			new Tone.Buffer({
 				"url"  : url,
 				"callback" :  function (buffer){
@@ -9860,7 +9862,8 @@ define('Tone/source/Player',["Tone/core/Tone", "Tone/core/Buffer", "Tone/source/
 					}
 				}
 			});
-		} else if (callback){
+		// } else 
+		if (callback){
 			callback(self);
 		}
 	};
