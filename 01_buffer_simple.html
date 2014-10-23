@@ -7,31 +7,34 @@ by Yotam Mann and Studio Indefinit, 2014
 <html>
 <head>
   <meta charset="utf-8">
-  <title>PLAYER</title>
+  <title>BUFFER PLAYER</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   
+  <script type="text/javascript" src="./lib/modernizr.custom.97213.js"></script>
   <script type="text/javascript" src="./lib/jquery.min.js"></script>
   <script type="text/javascript" src="./lib/jquery-ui.js"></script>
   <script type="text/javascript" src="./lib/jquery.ui.touch-punch.js"></script>
-  <script type="text/javascript" src="./lib/Tone.min.js"></script>
+  <script type="text/javascript" src="./lib/Tone.js"></script>
   <script type="text/javascript" src="./lib/Widgets.js"></script>
   <link rel="stylesheet" type="text/css" href="./styles/widgets.css">
   <link rel="stylesheet" type="text/css" href="./styles/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="./styles/dragdrop.css">
 
 </head>
 <body>
   <div id="Container">
     <div id="Explanation">
-      Player
+      BUFFER PLAYER
       <br>
       <br>
-      Press and hold to hear a 10ms grain of audio. 
+      Press and hold to hear an audio sample.  Drag and drop any mp3, ogg, or wav files from your local filesystem to change the buffer sample! 
     </div>
     <div id="Content">
       <div id="Loading">Loading...</div>
     </div>
   </div>
+  <script type="text/javascript" src="./lib/dragdrop.js"></script>
   <script type="text/javascript">
 
     /* globals Tone, GUI */
@@ -41,12 +44,17 @@ by Yotam Mann and Studio Indefinit, 2014
     });
 
     player.loop = true;
-    player.loopStart = 0.1;
-    player.loopEnd = 0.11;
 
     //connect it to the output
     player.toMaster();
     
+    new DragDrop(function(buffer){ 
+      player.load(buffer, function(){
+        console.log('loaded new buffer'); 
+      });
+    });
+
+
     // GUI //
 
     new GUI.Momentary($("#Content"), function(on){
