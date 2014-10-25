@@ -10,7 +10,7 @@ by Studio Indefinit, 2014
   <title>Mozfest Convolution Example</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  
+  <script type="text/javascript" src="./lib/modernizr.custom.97213.js"></script>
   <script type="text/javascript" src="./lib/jquery.min.js"></script>
   <script type="text/javascript" src="./lib/jquery-ui.js"></script>
   <script type="text/javascript" src="./lib/jquery.ui.touch-punch.js"></script>
@@ -18,25 +18,29 @@ by Studio Indefinit, 2014
   <script type="text/javascript" src="./lib/Widgets.js"></script>
   <link rel="stylesheet" type="text/css" href="./styles/widgets.css">
   <link rel="stylesheet" type="text/css" href="./styles/jquery-ui.css">
-
+  <link rel="stylesheet" type="text/css" href="./styles/dragdrop.css">
 </head>
 <body>
   <div id="Container">
+    <div id="operating-mode">Source mode</div>
     <div id="Explanation">
-      Convolver
+      Convolver Simple
       <br>
       <br>
-      Press and hold to hear a 10ms grain of audio. 
+      Press and hold to hear audio sample.  Move the slider around to adjust the amount of convolution.  To test new source buffers, press "s" and then drag and drop a file.  <span class="red">To test new convolution impuse reponses, press "i" and then drag and drop a file.</span>
     </div>
     <div id="Content">
       <div id="Loading">Loading...</div>
     </div>
   </div>
+  <script type="text/javascript" src="./lib/dragdrop.js"></script>
   <script type="text/javascript">
 
     /* globals Tone, GUI */
+    
+    var isSrcBuffer = true; //used for checking which buffer to upload in drag&drop
 
-    var player = new Tone.Player("./audio/A1.mp3", function(){
+    var player = new Tone.Player("./audio/linus_torvalds_operatingsystems.mp3", function(){
       $("#Loading").remove();
     });
 
@@ -58,6 +62,31 @@ by Studio Indefinit, 2014
     // player.toMaster();
     player.connect(convolver);
     convolver.toMaster();
+
+    new DragDrop(function(buffer){ 
+      if(!isSrcBuffer){
+        convolver.load(buffer, function(){
+          console.log('loaded new impulse response buffer');  
+        });
+      }
+      else{
+        player.load(buffer, function(){
+          console.log('loaded new source buffer');
+        });
+      }
+    });
+
+    $(window).on('keyup', function(e){
+      if(e.key == 's'){
+        isSrcBuffer = true;
+        $('#operating-mode').html('source mode');
+      }
+      else if (e.key == 'i'){
+        isSrcBuffer = false;
+        $('#operating-mode').html('IR mode');
+      }
+    });
+    
 
     // GUI //
     var container = $("#Content");
@@ -99,9 +128,20 @@ by Studio Indefinit, 2014
     width: 300px;
     height: 300px;
   }
-
+  #operating-mode {
+    width:100px;
+    position: absolute;
+    top:0;
+    left:0;
+    padding:1em;
+    background-color:#000;
+    color:#fff;
+  }
   .Momentary, .slider, .Value, {
     width: 100%;
+  }
+  .red {
+    color:#f00;
   }
   </style>
 </body>

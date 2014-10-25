@@ -1,0 +1,117 @@
+<!-- 
+mozfest-bufferexample.html
+based on official player.html example at https://github.com/TONEnoTONE/Tone.js/blob/dev/examples/player.html
+by Yotam Mann and Studio Indefinit, 2014
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Player endless scroll</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  
+  <script type="text/javascript" src="./lib/modernizr.custom.97213.js"></script>
+  <script type="text/javascript" src="./lib/jquery.min.js"></script>
+  <script type="text/javascript" src="./lib/jquery-ui.js"></script>
+  <script type="text/javascript" src="./lib/jquery.ui.touch-punch.js"></script>
+  <script type="text/javascript" src="./lib/Tone.js"></script>
+  <script type="text/javascript" src="./lib/Widgets.js"></script>
+  <link rel="stylesheet" type="text/css" href="./styles/widgets.css">
+  <link rel="stylesheet" type="text/css" href="./styles/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="./styles/dragdrop.css">
+
+</head>
+<body>
+  <div id="Container">
+    <div id="Explanation">
+      BUFFER PLAYER ENDLESS SCROLL
+      <br>
+      <br>
+      Press Play to hear sample, and scroll faster to playback faster.  Drag and drop any mp3, ogg, or wav files from your local filesystem to change the buffer sample! 
+    </div>
+    <div id="Content">
+      <div id="Loading">Loading...</div>
+    </div>
+  </div>
+  <script type="text/javascript" src="./lib/dragdrop.js"></script>
+  <script type="text/javascript">
+
+    /* globals Tone, GUI */
+    /**
+     * Loads a track from Spotify and on loaded removes loading icon
+     * https://p.scdn.co/mp3-preview/9ff2b5defdfed4c1cf86718675d0d7c2e7122449
+     * ^Beyonce, Love On Top
+     */
+    var player = new Tone.Player("https://p.scdn.co/mp3-preview/9ff2b5defdfed4c1cf86718675d0d7c2e7122449", function(){
+      $("#Loading").remove();
+    });
+
+    player.loop = true;
+    player.toMaster(); //connect it to the output
+    
+    new DragDrop(function(buffer){ 
+      player.load(buffer, function(){
+        console.log('loaded new buffer'); 
+      });
+    });
+
+
+    // GUI //
+
+    new GUI.Checkbox($("#Content"), function(on){
+      if (on){
+        player.start();
+      } else {
+        player.stop();
+      }
+    }, "Play", "Pause");
+    
+
+    // UTILS //
+    //map a value from one range to another
+    function mapVal(value, start1, stop1, start2, stop2) {
+      return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
+    }
+
+    /**
+     * We use speed, not velocity bc there's a buffer source limitation
+     * on negative speeds
+     */
+    var lastOffset = $(window).scrollTop();
+    var date = new Date();
+    var currTime = date.getTime();
+    var scrollSpeed;
+    $(window).on('scroll', function(e){
+      console.log(e);
+      //if you want to map percent scrolled to playback speed, uncomment this line
+      // var percent = -($(window).scrollTop() / ($(window).height() - $(document).height())) * 3;
+      var dt = (new Date().getTime()) - currTime; //change in time
+      if($(window).scrollTop() > 0){
+        scrollSpeed = Math.abs(($(window).scrollTop() - lastOffset) / dt);
+      }
+      scrollSpeed = mapVal(scrollSpeed, 0.0, 75.0, 0.0, 3.0)
+      // console.log(speed);
+      player.setPlaybackRate(scrollSpeed);
+      currTime = new Date().getTime();
+      lastOffset = $(window).scrollTop();
+    });
+
+
+  </script>
+  <style type="text/css">
+  body {
+    height: 10000px;
+  }
+  #Content {
+    width: 100px;
+  }
+  .Momentary {
+    width: 100%;
+  }
+  .Checkbox {
+    position: fixed;
+  }
+  </style>
+</body>
+</html>
