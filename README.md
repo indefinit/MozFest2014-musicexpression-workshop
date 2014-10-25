@@ -4,7 +4,7 @@ Hello, you've made it to my Github repo for "musical expression on the open web"
 
 **Workshop audience:** This workshop is targeted at beginner/intermediate coders/designers/musicians.  I'm assuming participants have worked in javascript before, but not necessarily with the web audio api.  It also helps to have a basic understanding of audio signal routing (inputs and outputs).  If you're feeling overwhelmed but are still excited to create some novel experiences usging the web audio api, please reach out to either myself, one of the facilitators, or a buddy participant in the workshop!
 
-**[Tone.js](https://github.com/TONEnoTONE/Tone.js):** All examples use the Tone.js audio library, by Yotam Mann. Tone is intended for musician/programmers who want to compose complex computer music, but also want the flexibility of working with various other javascript libraries.
+**[Tone.js](https://github.com/TONEnoTONE/Tone.js):** All examples use the Tone.js audio library, by Yotam Mann. Tone is intended for musician/programmers who want to use the native fabric of the web to create music, but who also want the flexibility of working with other audio/graphics generating javascript libraries.
 
 Shortlink to this repo:  [bit.ly/indefinit-mozfest2014](http://bit.ly/indefinit-mozfest2014)
 
@@ -17,22 +17,27 @@ Shortlink to this repo:  [bit.ly/indefinit-mozfest2014](http://bit.ly/indefinit-
 1.  Buffers and samples - (Instruments that sample audio)
 2.  Spatialization and convolution - (Sounds in space)
 
-### Breakout Sessions / Challenges (45 min)
+### Breakout Sessions / Challenges (1hr 45 min)
 
-- **Theme 1 - Buffers and samples** [Example](http://indefinit.github.io/MozFest2014-musicexpression-workshop/01_buffer_simple.html)
+- **Theme 1 - Buffers and samples** ([Example Simple](http://indefinit.github.io/MozFest2014-musicexpression-workshop/01_buffer_simple.html)) ([Example Advanced](http://indefinit.github.io/MozFest2014-musicexpression-workshop/03_buffer_endless_scroll.html))
     + Create a simple sound sampler that takes in audio streams from the local filesystem or spotify 30s preview api, and plays them back in unique ways. 
 - **Theme 2 - Spatialization and convolution** [Example](http://indefinit.github.io/MozFest2014-musicexpression-workshop/02_convolution_simple.html)
     + Using a balloon and your mobile phone, find a quiet space to record your own impulse response and convolve it with a sound file of your choosing.
 
+- **Alt theme**
+    + If you attended the web audio visualization session yesterday, expand on your work there by adding generative audio to your build.
+
 ----------
 
 ## Resources For Workshop Themes
-Code snippets can be found in the ```examples-src/``` directory.  To run any web audio example locally, you'll need to use a localhost server.  The simplest way to open an http server on port 8080 is to navigate into the examples directory in your terminal, and then:
+Code examples can be found in the ```examples-src/``` directory.  To run any web audio example locally, you'll need to use a localhost server.  The simplest way to open an http server on port 8080 is to navigate into the examples directory in your terminal, and then:
 ```shell
 python -m SimpleHTTPServer 8080
 ```
 
 Navigate your browser to http://localhost:8080/ and you should be all set!
+
+The official documentation for Tone.js can be found [HERE](http://tonenotone.github.io/Tone.js/doc/).
 
 #### <i class="icon-folder-open"></i> Buffers and samples
 
@@ -64,7 +69,7 @@ Navigate your browser to http://localhost:8080/ and you should be all set!
 ### Experiences:
 
  - [Plink](http://labs.dinahmoe.com/plink/): A multiplayer musical experience for the web. 
- - [ToneCraft](http://labs.dinahmoe.com/ToneCraft/#): 
+ - [ToneCraft](http://labs.dinahmoe.com/ToneCraft/#): A web audio and WebGL sequencer (chrome experiment).
  - [PollySynth](http://pollysynth.com/): a multiplayer musical game.  Users can control their synthesizer/avatar with their mobile device and a websocket. Created by Secret Future.
  - [Over The Tiny Hills](http://www.overthetinyhills.com/):  An interactive music experience by Ultranoir
  - [US Open Sessions](http://www.usopen.org/en_US/sessions/): A data sonification project by IBM and James Murphy using the web audio api.
@@ -86,3 +91,8 @@ Navigate your browser to http://localhost:8080/ and you should be all set!
  - [Wavepot:](http://wavepot.com/)  An audio programming environment for the web.
  - [Lissajous](http://lissajousjs.com/):  A web audio library that relies heavily on sample buffers.  I really love the simplicity of this library and how easy it is to build beautiful pieces of music in a short period of time.  Hereâ€™s a [demo video](https://www.youtube.com/watch?v=jBRqOp5ws58) using just a web console.
  - [Teoria.js:](https://github.com/saebekassebil/teoria)  A web audio library for music theory and composition.
+
+### A note on source files in this repo:
+- The convolution example uses audio from [http://www.freeinfosociety.com/media.php?id=50](http://www.freeinfosociety.com/media.php?id=50)
+- All other impulse response samples are c/o Studio Indefinit and may be used in Creative Commons, share-alike, attribution. 
+
